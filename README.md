@@ -15,18 +15,18 @@ The project also implements **fact and dimension modeling, One Big Table (OBT), 
 ```text
 AWS S3
    │
-   │  Data Files
+   │ Data Files
    ▼
 Snowflake Stage
    │
-   │  COPY INTO
+   │ COPY INTO
    ▼
 Snowflake
    │
    ▼
 Bronze Layer
    │
-   │  dbt Transformations
+   │ dbt Transformations
    ▼
 Silver Layer
    │
@@ -35,157 +35,182 @@ Gold Layer
    ├── Fact Tables
    ├── Dimension Tables
    └── One Big Table (OBT)
+```
 
-   🔄 Data Pipeline
-1. Data Ingestion
-Airbnb dataset files are stored in AWS S3.
-Snowflake is connected to the S3 data source.
-A Snowflake Stage is used to access the files.
-Data is loaded into Snowflake using COPY INTO.
-2. Bronze Layer
+---
+
+## 🔄 Data Pipeline
+
+### 1. Data Ingestion
+
+- Airbnb dataset files are stored in **AWS S3**.
+- Snowflake is connected to the S3 data source.
+- A **Snowflake Stage** is used to access the files.
+- Data is loaded into Snowflake using `COPY INTO`.
+
+### 2. Bronze Layer
 
 The Bronze layer represents the initial data layer after ingestion.
 
-Responsibilities include:
+- Maintains the initial dataset structure.
+- Provides the foundation for downstream transformations.
+- Prepares data for dbt transformation layers.
 
-Maintaining the raw/initial dataset structure
-Preparing data for downstream transformations
-Providing the foundation for the dbt transformation layers
-3. Silver Layer
+### 3. Silver Layer
 
 The Silver layer contains transformed and cleaned datasets.
 
 Transformations include:
 
-Data cleaning
-Column transformations
-Data standardization
-Business logic
-Joining related datasets
-4. Gold Layer
+- Data cleaning
+- Column transformations
+- Data standardization
+- Business logic
+- Joining related datasets
 
-The Gold layer contains analytics-ready datasets designed for downstream analysis.
+### 4. Gold Layer
+
+The Gold layer contains analytics-ready datasets.
 
 This layer includes:
 
-Fact tables
-Dimension tables
-One Big Table (OBT)
-Business-ready transformations
-⭐ Key Features
-Bronze / Silver / Gold Architecture
+- Fact tables
+- Dimension tables
+- One Big Table (OBT)
+- Business-ready transformations
 
-The project follows a layered data architecture to separate ingestion, transformation, and analytics-ready datasets.
+---
 
-Fact & Dimension Modeling
+## ⭐ Key Features
 
-The Gold layer contains structured fact and dimension tables to support analytical use cases.
+### Bronze / Silver / Gold Architecture
 
-One Big Table (OBT)
+Layered architecture separates ingestion, transformation, and analytics-ready datasets.
 
-An OBT model combines required attributes from multiple datasets into a single analytics-ready table.
+### Fact & Dimension Modeling
 
-Reusable Jinja Macros
+The Gold layer contains structured **fact and dimension tables** for analytical use cases.
 
-Reusable dbt macros are used to reduce repetitive SQL logic and improve maintainability.
+### One Big Table (OBT)
 
-Metadata-Driven Transformations
+An **OBT model** combines required attributes from multiple datasets into a single analytics-ready table.
 
-The project uses configuration-driven Jinja logic to dynamically generate:
+### Reusable Jinja Macros
 
-Selected columns
-Table aliases
-Join conditions
-LEFT JOIN statements
+Reusable dbt macros reduce repetitive SQL logic and improve maintainability.
 
-This reduces hard-coded SQL and makes the transformation logic more reusable.
+### Metadata-Driven Transformations
 
-dbt Data Quality Tests
+Configuration-driven Jinja logic dynamically generates:
+
+- Selected columns
+- Table aliases
+- Join conditions
+- LEFT JOIN statements
+
+This reduces hard-coded SQL and makes transformation logic reusable.
+
+### dbt Data Quality Tests
 
 dbt tests are implemented to validate data quality and improve reliability of transformed models.
 
-Incremental Model
+### Incremental Model
 
 An incremental dbt model is implemented to process data efficiently instead of rebuilding the complete dataset on every run.
 
-🛠️ Technology Stack
-Technology	Purpose
-AWS S3	Source data storage
-Snowflake	Cloud data warehouse
-Snowflake Stage	Data ingestion from S3
-COPY INTO	Loading data into Snowflake
-dbt	Data transformation and modeling
-SQL	Data transformation and analysis
-Jinja	Dynamic and reusable dbt logic
-Git	Version control
-GitHub	Source code repository
-📂 Project Structure
+---
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|------------|---------|
+| AWS S3 | Source data storage |
+| Snowflake | Cloud data warehouse |
+| Snowflake Stage | Data ingestion from S3 |
+| COPY INTO | Loading data into Snowflake |
+| dbt | Data transformation and modeling |
+| SQL | Data transformation and analysis |
+| Jinja | Dynamic and reusable dbt logic |
+| Git | Version control |
+| GitHub | Source code repository |
+
+---
+
+## 📂 Project Structure
+
+```text
 airbnb-data-engineering-snowflake-dbt-aws/
 │
 ├── analyses/
-│
 ├── macros/
-│   └── Reusable Jinja macros
-│
 ├── models/
 │   ├── Bronze/
 │   ├── Silver/
 │   └── Gold/
-│
 ├── seeds/
-│
 ├── snapshots/
-│
 ├── tests/
-│   └── dbt data quality tests
-│
 ├── dbt_project.yml
 ├── .gitignore
 └── README.md
-🔧 dbt Workflow
+```
+
+---
+
+## 🔧 dbt Workflow
 
 Typical dbt workflow for this project:
 
+```bash
 dbt debug
 dbt run
 dbt test
+```
 
-The dbt project connects to Snowflake and executes the transformation models inside Snowflake.
+The dbt project connects to Snowflake and executes transformation models inside Snowflake.
 
-🔐 Security
+---
+
+## 🔐 Security
 
 Sensitive credentials are intentionally excluded from this repository.
 
-The project uses environment variables for sensitive Snowflake authentication details, and files such as:
+The project uses environment variables for sensitive Snowflake authentication details.
 
+The following files are excluded using `.gitignore`:
+
+```text
 profiles.yml
 .user.yml
 .env
-
-are excluded using .gitignore.
+```
 
 AWS credentials and Snowflake passwords should never be committed to source control.
 
-🎯 Project Objectives
+---
 
-The main objectives of this project are to demonstrate practical experience with:
+## 🎯 Project Objectives
 
-Cloud data ingestion
-AWS S3
-Snowflake data warehousing
-dbt transformations
-Layered data architecture
-Dimensional modeling
-OBT modeling
-Jinja templating
-Metadata-driven transformations
-Data quality testing
-Incremental data processing
-Git/GitHub version control
+This project demonstrates practical experience with:
 
-👨‍💻 Author
+- Cloud data ingestion
+- AWS S3
+- Snowflake data warehousing
+- dbt transformations
+- Layered data architecture
+- Dimensional modeling
+- OBT modeling
+- Jinja templating
+- Metadata-driven transformations
+- Data quality testing
+- Incremental data processing
+- Git/GitHub version control
 
-Akash Kumar Jha
+---
+
+## 👨‍💻 Author
+
+**Akash Kumar Jha**
 
 Analytics Engineer | Data Engineer
 
